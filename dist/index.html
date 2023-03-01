@@ -1,30 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Overlook</title>
-</head>
-<body>
-  <header class="header-top-container" id="header-top-container">
-    <h1 class="header-title">The Overlook Hotel</h1>
-  </header>
-  <nav class ="nav-buttons-top">
-    <button>Home</button>
-    <button>My Bookings</button>
-    <button>Sign Out</button>
-  </nav>
-  <main>
-    <div class="date-selector"></div>
-    <h2>Find A Room</h2>
-    <forn>
-      <label for="chooseDate">Please select a date</label>
-      <input type="date" for=""chooseDate>
-    </forn>
-  </main>
-  <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
-  <script src="bundle.js"></script>
 
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overlook</title>
+  </head>
+
+  <body>
+    <header class="container-top" id="header-top-container">
+      <h1 class="header-title">The Overlook Hotel</h1>
+    </header>
+    <nav class="container-top">
+      <div class="nav-buttons row">
+        <button class="nav-buttons" id="home">Home</button>
+        <button class="nav-buttons" id="bookings">My Bookings</button>
+        <button class="nav-buttons" id="expenses">My Expenses</button>
+      </div>
+    </nav>
+    <main>
+      <div class="date-selector"></div>
+      <h2>Find A Room</h2>
+      <form>
+        <label for="chooseDate">Please select a date</label>
+        <input type="date" for="" chooseDate>
+      </form>
+      <section>
+        <img class="main-image" src="./src/images/stairs.jpg" alt="wrapping stairs">
+        <img class="main-image" src="./src/images/hotel.jpg" alt="mountain">
+      </section>
+    </main>
+    <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
+    <script src="bundle.js"></script>
+  </body>
+
 </html>
