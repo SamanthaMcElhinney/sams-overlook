@@ -12,6 +12,13 @@
     <header class="container-top" id="header-top-container">
       <h1 class="header-title">The Overlook Hotel</h1>
     </header>
+    <div class="date-selector">
+      <!-- <h2>Find A Room</h2> -->
+      <form>
+        <label for="chooseDate">Please select a date</label>
+        <input type="date" for="" chooseDate>
+      </form>
+    </div>
     <nav class="container-top">
       <div class="nav-buttons row">
         <button class="nav-buttons" id="home">Home</button>
@@ -20,16 +27,6 @@
       </div>
     </nav>
     <main>
-      <div class="date-selector"></div>
-      <h2>Find A Room</h2>
-      <form>
-        <label for="chooseDate">Please select a date</label>
-        <input type="date" for="" chooseDate>
-      </form>
-      <section>
-        <img class="main-image" src="./src/images/stairs.jpg" alt="wrapping stairs">
-        <img class="main-image" src="./src/images/hotel.jpg" alt="mountain">
-      </section>
     </main>
     <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
     <script src="bundle.js"></script>
