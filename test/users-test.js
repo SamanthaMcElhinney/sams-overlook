@@ -22,4 +22,7 @@ describe("User", () => {
     it('should have an id', () => {
         expect(user.id).to.equal(1)
     })
+    it('should be able to hold bookings', () => {
+        expect(user.bookings).to.deep.equal([])
+    })
 })
