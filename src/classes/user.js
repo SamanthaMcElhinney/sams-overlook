@@ -1,13 +1,26 @@
+import Booking from "../src/classes/booking.js";
+
 class User {
-    constructor(data){
-        this.name = data.name
-        this.id = data.id
+    constructor(userData){
+        this.name = userData.name
+        this.id = userData.id
         this.bookings = []
     }
 
-    findBookings(){
+    filterBookingsById(bookingData){
+    const filteredBooking = bookingData.filter(booking => booking.userId === this.id)
+    filteredBooking.forEach(booking => {
+        this.bookings.push(new Booking(booking))
+    })
 
     }
+    calculateTotalCost(room){
+        const total = this.bookings.reduce((acc, booking)=> {
+            acc += booking.room.costPerNight
+        },0).toFixed(2)
+        return total
+    }
+
     
 }
 
