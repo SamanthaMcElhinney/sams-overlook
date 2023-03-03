@@ -1,6 +1,7 @@
 import chai from "chai";
 const expect = chai.expect;
 import User from "../src/classes/user.js";
+import Booking from "src/classes/booking.js";
 
 describe("User", () => {
     let user;
@@ -24,5 +25,10 @@ describe("User", () => {
     })
     it('should be able to hold bookings', () => {
         expect(user.bookings).to.deep.equal([])
+    })
+
+    it('should able to check for bookings', ()=> {
+        let bookings = booking.
+        expect(user.bookings).to.equal()
     })
 })
