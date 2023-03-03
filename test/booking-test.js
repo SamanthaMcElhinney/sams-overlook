@@ -8,7 +8,7 @@ describe("Booking", () => {
     // let user;
     let bookingData = {
       id: "5fwrgu4i7k55hl6t8",
-      userId: 1,
+      userID: 1,
       date: "2022/02/05",
       roomNumber: 12,
     }
@@ -28,7 +28,7 @@ describe("Booking", () => {
         expect(booking.id).to.equal("5fwrgu4i7k55hl6t8")
     })
     it('should have a userId', () => {
-        expect(booking.userId).to.equal(1)
+        expect(booking.userID).to.equal(1)
     })
     it('should have a date', () => {
         expect(booking.date).to.equal("2022/02/05");
