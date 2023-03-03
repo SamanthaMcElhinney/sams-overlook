@@ -1,7 +1,9 @@
 import chai from "chai";
 const expect = chai.expect;
-import User from "../src/classes/user.js";
-import Booking from "src/classes/booking.js";
+import User from "../src/classes/user";
+import Booking from "../src/classes/booking";
+import sampleBookingData from "../data/booking-data.js";
+import sampleRoomData from "../data/room-data";
 
 describe("User", () => {
     let user;
@@ -28,7 +30,15 @@ describe("User", () => {
     })
 
     it('should able to check for bookings', ()=> {
-        let bookings = booking.
-        expect(user.bookings).to.equal()
+        user.filterBookingsById(sampleBookingData)
+        expect(user.bookings[0]).to.be.an.instanceOf(Booking)
+        expect(user.bookings).to.have.length(1)
+        expect(user.bookings[0].roomNumber).to.equal(12)
+    })
+
+    it('should be able to calculate total spent on bookings', ()=> {
+        expect(
+          user.calculateTotalCost(sampleBookingData, sampleRoomData)
+        ).to.equal('172.09');
     })
 })
