@@ -9,3 +9,12 @@ import './images/turing-logo.png'
 import "./images/hotel.jpg"
 import './images/stairs.jpg'
 console.log('This is the JavaScript entry file - your code begins here.');
+// import{ Room } from './classes/Room'
+// import{ User } from './classes/User'
+
+//QUERY SELECTORS
+
+//Global
+let user;
+
+//Event Listeners
