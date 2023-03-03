@@ -1,10 +1,14 @@
+// import User from "../src/classes/user.js";
 class Booking {
-    constructor(data){
-        this.id = data.id || null;
-        this.userId= data.userId;
-        this.date = data.date
-        this.roomNumber = data.roomNumber
-    }
+  constructor(bookingData) {
+    this.id = bookingData.id || null;
+    this.userId = bookingData.userId;
+    this.date = bookingData.date;
+    this.roomNumber = bookingData.roomNumber;
+
+    // this.room = new Room(room)
+  }
+
 }
 
-export default Booking
+export default Booking;
