@@ -1,25 +1,21 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// An example of how you tell webpack to use a CSS (SCSS) file
 import './css/styles.css';
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
 import "./images/hotel.jpg"
 import './images/stairs.jpg'
-// console.log('This is the JavaScript entry file - your code begins here.');
 import Room from './classes/Room'
 import User from "./classes/user.js";
+import Booking from './classes/booking';
 
 // -------------------------------DOM ELEMENTS-------------------------------
 const bookingsButton = document.querySelector('#bookings')
 // const expensesButton = document.querySelector('#expenses')
 const containerBookings = document.querySelector("#container-bookings");
+// const containerTotalCost = document.querySelector("#container-total-cost");
+const containerTotalCost = document.querySelector("#total-container");
 
 let newUser;
-let getBookings;
 let getAllRooms
-let room;
+let filteredBookings
 
 //----------------------------------FETCH REQUESTS-----------------------------------
 
@@ -36,43 +32,16 @@ const rooms = fetch("http://localhost:3001/api/v1/rooms")
 Promise.all([getCustomers, bookings, rooms]) 
 .then((data) => {
     console.log(data)
-      newUser = new User(data[0].customers[1]);
-      console.log(newUser, "getCustomers");
-      console.log(data[1].bookings)
-      newUser.filterBookingsById(data[1].bookings);
+      newUser = new User(data[0].customers[0]);
+      let filteredBookings = newUser.filterBookingsById(data[1].bookings);
       console.log(newUser.bookings, "AFTER BOOKINGS");
-      getAllRooms = data.rooms.forEach(room => new Room (room))
-        console.log(getAllRooms, "roomsFiltered")
+      console.log(data[2].rooms, "ROOOOOMS")
+    //   booking.findRoom(data[2].rooms)
+    // let cost = newUser.calculateTotalCost(filteredBookings,data[2].rooms);
+
+      getAllRooms = data[2].rooms.forEach(room => new Room (room))
+        displayUserInfo()
 })
-
-
-
-
-// const customers = fetch("http://localhost:3001/api/v1/customers")
-// .then((response) => response.json())
-
-// const getBookings = fetch('http://localhost:3001/api/v1/bookings')
-// .then((response => response.json()))
-
-
-// Promise.all([customers],[getBookings])
-//   .then((data) => {
-//     let newUser = data.customers[0]((customer) => new User(customer));
-//     console.log(newUser)
-    // console.log(newUser)
-    // let newBooking = data.userId(customer)
-    // console.log(newBooking)
-    // let newUser = data.customers.map(customer=> new User(customer))
-    // console.log(newUser, "did this work")
-    // console.log(data.customers[0], "name")
-    // const user = new User(data.customers);
-    // console.log(user, "user")
-    // console.log(customers, "customers")
-//     return newUser;
-//   })
-//   .catch((err) => err);
-// console.log(returnPromise)
-
 
 // --------------------------------EVENT LISTENERS----------------------------------------
 
@@ -80,11 +49,18 @@ Promise.all([getCustomers, bookings, rooms])
 
 //----------------------------------------FUNCTIONS-----------------------------------------
 
-// function displayUserInfo(){
-//     newUser.filterBookingsById(bookingData,roomData)
-//     console.log(user)
-//     containerBookings.innerHTML = ""
-//     user.bookings.forEach(booking => {
-//         containerBookings
-//     })
-// }
+function displayUserInfo(){
+    containerBookings.innerHTML = " "
+    newUser.bookings.forEach(booking => {
+        containerBookings.innerHTML += `
+        <div class="user-bookings dashboard">
+        <p class="p-date"> Date: ${booking.date}</p>
+        <p class="p-user"> Room number: ${booking.roomNumber}</p>
+        
+     `
+    })
+    containerTotalCost.innerHTML = " "
+    containerTotalCost.innerHTML += `
+    <p>${currentUser.calculateTotalCost(filteredBookings,getAllRooms)} </p>
+    `
+}
