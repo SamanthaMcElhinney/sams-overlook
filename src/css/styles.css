@@ -4,6 +4,11 @@ body {
   background-size: cover;
 }
 
+.header-title, .total-container{
+  padding:20px;
+  overflow:auto;
+}
+
 .container-top{
   /* color: #363439; */
   background-color: #606C38;
@@ -15,15 +20,12 @@ body {
 .nav-buttons{
   display: flex;
   flex-direction: row-reverse;
+  margin-bottom: 10px;
 }
-/* main {
-  background-repeat: no-repeat;
-  width: 100%;
-  height: 800px;
-  background-image: url("../images/hotel.jpg");
-  background-size: cover;
-} */
 
+#home{
+  margin-right:10px;
+}
 
 button{
   background: none;
@@ -32,11 +34,55 @@ button{
 }
 
 .date-selector{
+  color:#FEFAE0;
+  padding:20px;
+  overflow:auto;
   background-color:#606C38;
   display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-content: flex-end;
-    justify-content: space-between;
-    align-items: baseline;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-content: flex-end;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.container-bookings {
+  margin: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.p-date, .p-user {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: stretch;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.container-total-cost {
+  color:#FEFAE0;
+  background: #606C38;
+  width:300px;
+  text-align: center;
+}
+.dashboard {
+  width: 200px;
+  height: 100px;
+  background:  #FEFAE0;
+  margin: 25px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.current-bookings {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: center;
 }

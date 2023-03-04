@@ -8,6 +8,9 @@ const sampleUserData = [
     }, {
     id: 3,
     name:"Kelvin Schiller"
+    }, {
+    id: 9,
+    name:"Faustino Quitzon"
     }
 ]
 
