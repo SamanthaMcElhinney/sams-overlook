@@ -19,10 +19,7 @@ class User {
 
 
     calculateTotalCost(bookingData, roomData) {
-        console.log(bookingData, "JOES DATA")
         const bookings = this.filterBookingsById(bookingData)
-        console.log(bookings, "bookings")
-        console.log(roomData, "roomData")
         const total = bookings.reduce((acc, booking) => {
             roomData.forEach((room) => {
                 if (room.number === booking.roomNumber) {
