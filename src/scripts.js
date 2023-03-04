@@ -11,11 +11,12 @@ const bookingsButton = document.querySelector('#bookings')
 // const expensesButton = document.querySelector('#expenses')
 const containerBookings = document.querySelector("#container-bookings");
 // const containerTotalCost = document.querySelector("#container-total-cost");
-const containerTotalCost = document.querySelector("#total-container");
+const containerTotalCost = document.querySelector(".container-total-cost");
 
 let newUser;
 let getAllRooms
 let filteredBookings
+let cost;
 
 //----------------------------------FETCH REQUESTS-----------------------------------
 
@@ -32,12 +33,12 @@ const rooms = fetch("http://localhost:3001/api/v1/rooms")
 Promise.all([getCustomers, bookings, rooms]) 
 .then((data) => {
     console.log(data)
-      newUser = new User(data[0].customers[0]);
+      newUser = new User(data[0].customers[1]);
       let filteredBookings = newUser.filterBookingsById(data[1].bookings);
       console.log(newUser.bookings, "AFTER BOOKINGS");
       console.log(data[2].rooms, "ROOOOOMS")
     //   booking.findRoom(data[2].rooms)
-    // let cost = newUser.calculateTotalCost(filteredBookings,data[2].rooms);
+    cost = newUser.calculateTotalCost(filteredBookings,data[2].rooms);
 
       getAllRooms = data[2].rooms.forEach(room => new Room (room))
         displayUserInfo()
@@ -56,11 +57,10 @@ function displayUserInfo(){
         <div class="user-bookings dashboard">
         <p class="p-date"> Date: ${booking.date}</p>
         <p class="p-user"> Room number: ${booking.roomNumber}</p>
-        
      `
     })
     containerTotalCost.innerHTML = " "
     containerTotalCost.innerHTML += `
-    <p>${currentUser.calculateTotalCost(filteredBookings,getAllRooms)} </p>
+    <p>${cost} </p>
     `
 }
