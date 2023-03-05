@@ -1,25 +1,31 @@
 import chai from "chai";
 const expect = chai.expect;
 import Booking from "../src/classes/booking.js";
-// import User from "../src/classes/user.js"
+import sampleRoomData from "../data/room-data.js";
+import sampleBookingData from "../data/booking-data.js";
 
 describe("Booking", () => {
     let booking;
-    // let user;
+
     let bookingData = {
       id: "5fwrgu4i7k55hl6t8",
       userID: 1,
       date: "2022/02/05",
       roomNumber: 12,
     }
-    // let userData = {
-    //     name:"Leatha Ullrich",
-    //     id: 1,
-    // }
+
+    let roomData = {
+      number: 12,
+      roomType: "single room",
+      bidet: false,
+      bedSize: "twin",
+      numBeds: 2,
+      costPerNight: 172.09,
+    };
 
     beforeEach(() => {
         booking = new Booking(bookingData)
-        // user = new User(userData)
+        roomData;
     })
     it('should be an instance of Booking', () => {
         expect(booking).to.be.an.instanceOf(Booking)
@@ -36,4 +42,12 @@ describe("Booking", () => {
     it('should have a room number', () => {
         expect(booking.roomNumber).to.equal(12)
     })
+    it('should be able to find a room', () => {
+        let room = booking.findRoom(sampleRoomData)
+        expect(room.number).to.equal(12)
+    })
+    // it('should be able to create a new instance of room when finding a room', () => {
+    //     let room = booking.findRoom(roomData);
+    //     expect(room).to.be.instanceOf(Room)
+    // })
 })
