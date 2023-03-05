@@ -14,8 +14,6 @@ class Booking {
 
 }
 
-  //I need to look through date of bookings
-  //I need to use post to post the bookings
 
 
 
