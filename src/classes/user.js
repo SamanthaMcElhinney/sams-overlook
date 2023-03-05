@@ -10,13 +10,11 @@ class User {
 
     filterBookingsById(bookingData) {
         const filteredBooking = bookingData.filter(booking => booking.userID === this.id)
-        console.log(filteredBooking, "filtered booking")
         filteredBooking.forEach(foundBooking => {
             this.bookings.push(new Booking(foundBooking))
         })
         return this.bookings
     }
-
 
     calculateTotalCost(bookingData, roomData) {
         const bookings = this.filterBookingsById(bookingData)
@@ -28,10 +26,9 @@ class User {
             })
             return acc
         }, 0).toFixed(2)
-        console.log(total, "TOTAL")
         return total
     }
-}
+}   
 
 export default User
 
