@@ -7,11 +7,16 @@ class Booking {
     this.date = bookingData.date;
     this.roomNumber = bookingData.roomNumber;
   }
+
   findRoom(roomData){
-    const foundRoom = roomData.find(room => room.number === this.roomNumber)
-    return new Room(foundRoom)
-  }
+    return roomData.find(room => room.number === this.roomNumber)
+  }  
 
 }
+
+  //I need to look through date of bookings
+  //I need to use post to post the bookings
+
+
 
 export default Booking;
