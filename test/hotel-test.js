@@ -10,8 +10,8 @@ import Booking from "../src/classes/booking";
 describe('Hotel', () => {
     let hotel;
 
-    beforeEach(()=> {
-        hotel = new Hotel(sampleRoomData,sampleBookingData)
+    beforeEach(() => {
+        hotel = new Hotel(sampleRoomData, sampleBookingData)
     })
 
     it('should be a function', () => {
@@ -20,15 +20,25 @@ describe('Hotel', () => {
     it('should be an instance of hotel', () => {
         expect(hotel).to.be.an.instanceOf(Hotel)
     })
-    it('should be able to filter available rooms by date', ()=> {
+    it('should be able to filter available rooms by date', () => {
         let availableDate = hotel.filterByDate("2022/04/22");
         expect(availableDate).to.have.a.lengthOf(2);
     })
     it('should be able to filter available rooms by type', () => {
         let availableRooms = hotel.filterByRoomType(
-          "junior suite",
+            "junior suite",
+            "2022/02/05"
+        );
+        expect(availableRooms).to.have.a.lengthOf(11);
+    })
+    it('should be able to filter available rooms by multiple types', () => {
+        let availableRooms = hotel.filterByRoomType(
+          "residential suite",
           "2022/02/05"
         );
-        expect(availableRooms).to.have.a.lengthOf(0);
+        expect(availableRooms).to.have.a.lengthOf(11);
+    })
+    it("should be able to add new bookings", () => {
+        expect(hotel.bookings).to.have.a.lengthOf(3)
     })
 })
