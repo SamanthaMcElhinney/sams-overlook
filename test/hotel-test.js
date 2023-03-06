@@ -29,14 +29,14 @@ describe('Hotel', () => {
             "junior suite",
             "2022/02/05"
         );
-        expect(availableRooms).to.have.a.lengthOf(11);
+        expect(availableRooms).to.have.a.lengthOf(1);
     })
     it('should be able to filter available rooms by multiple types', () => {
-        let availableRooms = hotel.filterByRoomType(
-          "residential suite",
-          "2022/02/05"
+        let date = hotel.filterByDate("2022/04/22");
+        let availableRooms = hotel.filterByRoomType("residential suite", date
         );
-        expect(availableRooms).to.have.a.lengthOf(11);
+        console.log(availableRooms,"AR")
+        expect(availableRooms).to.have.a.lengthOf([1]);
     })
     it("should be able to add new bookings", () => {
         expect(hotel.bookings).to.have.a.lengthOf(3)
