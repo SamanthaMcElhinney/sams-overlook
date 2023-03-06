@@ -9,6 +9,10 @@ body {
   overflow:auto;
 }
 
+main {
+  display:flex;
+}
+
 .container-top{
   /* color: #363439; */
   background-color: #606C38;
@@ -46,7 +50,11 @@ button{
   align-items: baseline;
 }
 
+.book-button{
+  color:black;
+}
 .container-bookings {
+  width: 40vw;
   margin: 50px;
   display: flex;
   flex-wrap: wrap;
@@ -65,10 +73,11 @@ button{
 }
 
 .container-total-cost {
-  color:#FEFAE0;
-  background: #606C38;
-  width:300px;
-  text-align: center;
+    color: #FEFAE0;
+    background: #606C38;
+    width: 300px;
+    text-align: center;
+    width: 40vw;
 }
 .dashboard {
   width: 200px;
@@ -104,15 +113,15 @@ button{
 .container-available-rooms{
   display: flex;
   flex-direction: row;
-  /* display: inline; 
-  display: flex; */
+  flex-wrap: wrap;
   align-content: stretch;
   justify-content: space-around;
   align-items: center;
 }
 
 .styled-table {
-  background-color: #dddddd;
+  color:black;
+   background-color: #dddddd;
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9em;
@@ -130,6 +139,7 @@ button{
 .styled-table th,
 .styled-table td {
     padding: 12px 15px;
+    color:black;
 }
 
 .styled-table tbody tr {
