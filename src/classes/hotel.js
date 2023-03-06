@@ -5,49 +5,29 @@ class Hotel {
     constructor(roomData, bookingData) {
         this.rooms = roomData.map(room => new Room(room))
         this.bookings = bookingData.map(booking => new Booking(booking))
+        this.openRooms = []
     }
 
     filterByDate(date) {
-            // let selectedDate = this.bookings.filter(
-            //   (booking) => booking.date === date
-            // );
-            // let bookingOnAvailableDate = this.rooms.reduce((rooms, booking) => {
-            //   let isBooked = false;
-            //   this.rooms.forEach((room) => {
-            //     if (room.number !== booking.roomNumber) {
-            //       rooms.push(booking);
-            //     } else if (room.number === booking.number) {
-            //       isBooked = true;
-            //     }
-            //   });
-            //   return rooms;
-            // }, []);
-            // console.log(bookingOnAvailableDate, "BOOKING ON AVAILABLE DATE");
-            // return bookingOnAvailableDate;
-        const bookingsOnSelectedDate = this.bookings.filter(booking => booking.date === date);
-        const filteredAvailableRooms = this.rooms.filter(room => {
-            return bookingsOnSelectedDate.every(booking => {
-                return booking.roomNumber !== room.number;
-            });
-        });
-        if (!filteredAvailableRooms.length) {
-            return;
-        } else {
-            return filteredAvailableRooms;
-        }
+        const unavailableRooms = this.bookings.reduce((acc, booking) => {
+            if (booking.date === date) {
+                acc.push(booking.roomNumber)
+            }
+            return acc
+        }, [])
+        const availableRooms = this.rooms.filter(room => !unavailableRooms.includes(room.number))
+        return availableRooms
     }
 
-
     filterByRoomType(roomType, date) {
-        let hotelStatus = "available"
         const availableRoomsByDate = this.filterByDate(date)
-        console.log(availableRoomsByDate, "available rooms by date")
         const availableFilteredRooms = availableRoomsByDate.filter(room =>
             room.roomType === roomType)
         if (!availableFilteredRooms.length) {
-            return hotelStatus = "unavailable"
+            console.log(!availableFilteredRooms, "not available rooms")
+            return 
         } else {
-            console.log(availableFilteredRooms, "filteredROOM AVAIL");
+            console.log(availableFilteredRooms, "AVAILABLE FILTERED ROOMS in function")
             return availableFilteredRooms;
         }
     }
