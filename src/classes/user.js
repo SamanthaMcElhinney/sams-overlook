@@ -28,7 +28,7 @@ class User {
         }, 0).toFixed(2)
         return total
     }
-}   
+}
 
 export default User
 
