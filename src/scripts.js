@@ -15,13 +15,13 @@ const searchRoomButton = document.querySelector("#searchRooms");
 const userCalendar = document.getElementById("date")
 const submitDateButton = document.querySelector("#submit-date-button");
 const containerRooms = document.querySelector("#container-available-rooms");
-// const dateSelecterBox = document.querySelector("#date-selecto");
+// const searchRoomType = document.getElementById("roomType")
+let selection = document.querySelector('select')
 
-let newUser;
+let testUser;
 let hotel;
-let getAllRooms;
-// let filteredBookings;
 let cost;
+let valueSelected;
 
 //----------------------------------FETCH REQUESTS-----------------------------------
 
@@ -37,52 +37,79 @@ const getRooms = fetch("http://localhost:3001/api/v1/rooms").then((response) =>
   response.json()
 );
 
-// function fetchData() {
+function fetchData() {
   Promise.all([getCustomers, getBookings, getRooms])
     .then(data => {
-      newUser = new User(data[0].customers[1])
+      testUser = new User(data[0].customers[8])
       hotel = new Hotel(data[2].rooms, data[1].bookings)
-      const filteredBookings = newUser.filterBookingsById(data[1].bookings)
-      cost = newUser.calculateTotalCost(filteredBookings, data[2].rooms);
+      console.log(hotel, 'hotel')
+      const filteredBookings = testUser.filterBookingsById(data[1].bookings)
+      cost = testUser.calculateTotalCost(filteredBookings, data[2].rooms);
       displayUserInfo()
+      selectDate(event)
+      searchRoom()
     })
-
-
-// window.onload = fetchData()
-
-// Promise.all([getCustomers, getBookings, getRooms]).then((data) => {
-//   console.log(data);
-//   newUser = new User(data[0].customers[1]);
-//   let filteredBookings = newUser.filterBookingsById(data[1].bookings);
-//   console.log(newUser.bookings, "AFTER BOOKINGS");
-//   console.log(data[2].rooms, "ROOOOOMS");
-//   //   booking.findRoom(data[2].rooms)
-// cost = newUser.calculateTotalCost(filteredBookings, data[2].rooms);
-//   hotel = 
-//   getAllRooms = data[2].rooms.forEach((room) => new Room(room));
-//   displayUserInfo();
-// });
+}
+window.onload = fetchData()
 
 // --------------------------------EVENT LISTENERS----------------------------------------
 
-bookingsButton.addEventListener('click', displayUserInfo)
-// searchRoomButton.addEventListener("submit", () => {
-//   selectDate(event)
-// })
+// bookingsButton.addEventListener('click', displayUserInfo)
 submitDateButton.addEventListener("click", (event) => {
   selectDate(event);
 });
 
-//----------------------------------------FUNCTIONS-----------------------------------------
+selection.addEventListener('change', () => {
+  valueSelected = selection.options[selection.selectedIndex].text;
+  console.log(valueSelected)
+  if (valueSelected === "single room") {
+    return "single room"
+  } else if (valueSelected === "junior suite") {
+    return "junior suite"
+  } else if (valueSelected === "suite") {
+    return "suite"
+  } else if (valueSelected === "residential") {
+    return "residential suite"
+  }
+})
 
+searchRoomButton.addEventListener("click", (event) => {
+  searchRoom(event);
+});
+
+//----------------------------------------FUNCTIONS-----------------------------------------
+// function getSingleUser(userID){
+//   return fetch(`http://localhost:3001/api/v1/customers/${userID}`)
+//   .then(response => response.json())
+//   .then(data => newUser = data)
+//   .catch(error => console.log(error))
+// }
+
+// function postNewBookings(booking){
+//   fetch("http://localhost:3001/api/v1/bookings"),
+//     {
+//       method: "Post",
+//       body: JSON.stringify({
+//         userID: booking.userID,
+//         date: booking.date,
+//         roomNumber: booking.roomNumer,
+//       }),
+//       headers: {
+//         "Content-Type": "application/json",
+//       }
+//     }
+//       .then(result => result.json())
+//       .then(data => console.log(data))
+//       .catch(error => alert(`Server Error: ${error}. We are working on it. Please try again later`))
+// }
 function displayUserInfo() {
   containerBookings.innerHTML = " ";
-  newUser.bookings.forEach((booking) => {
+  testUser.bookings.forEach((booking) => {
     containerBookings.innerHTML += `
         <table class="styled-table">
     <thead>
         <tr>
-            <th>Dates</th>
+            <th>Date</th>
             <th>Room Number</th>
         </tr>
     </thead>
@@ -99,56 +126,71 @@ function displayUserInfo() {
   })
   containerTotalCost.innerHTML = " ";
   containerTotalCost.innerHTML += `
-  ${newUser.name}
+  ${testUser.name}
     <h3>Thanks for being a loyal customer!</h3>
     <p>Total Spent: $${cost} </p>
     `;
 }
 
-// --------------------------------Date----------------------------------------
+function determineBidet(room) {
+  if (room.bidet) {
+    return `Yes`;
+  }
+  return `No`;
+}
 
-
-// function filterRoomsByDate(){
-//   let date = getDate()
-//   let roomsToDisplay = hotel.filterRoomsByDate(date)
-//   return roomsToDisplay
-// }
-
-// function displayRoomsToBooking(){
-
-// }
-
-// function show(element){
-//   element.classList.remove('hidden');
-// }
-
-// function hide(element){
-//   element.classList.add('hidden')
-// }
+let dateSelected;
+let availableRooms;
 
 function selectDate(event) {
   event.preventDefault()
-  console.log(event)
-  let dateSelected = userCalendar.value.split("-").join("/");
-  console.log(dateSelected)
-  const availableRooms = hotel.filterByDate(dateSelected)
-  console.log(availableRooms)
-  containerRooms.innerHTML = " ";
-  availableRooms.forEach((room) => {
-    containerRooms.innerHTML += `
-        <div class="card-holder">
-          <img class="box-image" src="./images/bed.jpg" alt="comfortable hotel bed">
-          <h2 class="room-title">Room Type:${room.roomType}</h2>
-          <p class="bed-info">Bed Size: ${room.bedsize}</p>
-          <p class="bidet">Bidet: ${room.bidet}
-          <p class="number-beds"> Number of Beds: ${room.numBeds}</p>
-          <p class="cost-per-night"> Cost per Night: ${room.costPerNight}</p>
-          <button class="book-button">Book Now!</button>
-        </div>
-    `;
-  })
+  if(userCalendar.value) {
+    dateSelected = userCalendar.value.split("-").join("/");
+    console.log(dateSelected, "Dateselected")
+    availableRooms = hotel.filterByDate(dateSelected)
+    console.log(dateSelected)
+    containerRooms.innerHTML = " ";
+    availableRooms.forEach((room) => {
+      containerRooms.innerHTML += `
+      <div class="card-holder">
+      <img class="box-image" src="./images/bed.jpg" alt="comfortable hotel bed">
+      <h2 class="room-title">Room Type:${room.roomType}</h2>
+      <p class="bed-info">Bed Size: ${room.bedSize}</p>
+      <p class="bidet">Bidet: ${determineBidet(room)}
+      <p class="number-beds"> Number of Beds: ${room.numBeds}</p>
+      <p class="cost-per-night"> Cost per Night: ${room.costPerNight}</p>
+      <button class="book-button">Book Now!</button>
+      </div>
+      `;
+    })
+  } else {
+    containerRooms.innerHTML += `<p class="apology"> Our sincerest appologies my friend! There are no available dates. Please try another time`
+  }
 }
 
-// function filterRoomsByDate(){
-//   let date = 
-// }
+function searchRoom(event) {
+  event.preventDefault()
+  let filteredDate = selectDate(event)
+  hotel.filterByRoomType(valueSelected, filteredDate)
+  console.log(dateSelected, "date in function")
+  console.log(valueSelected, "INFUNCTION VALUE")
+  containerRooms.innerHTML = " ";
+  availableRooms.forEach((room) => {
+    console.log(availableRooms, "AR in function")
+    containerRooms.innerHTML += `
+        <div class="card-holder">
+        <img class="box-image" src="./images/bed.jpg" alt="comfortable hotel bed">
+        <h2 class="room-title">Room Type:${room.roomType}</h2>
+        <p class="bed-info">Bed Size: ${room.bedSize}</p>
+        <p class="bidet">Bidet: ${determineBidet(room)}
+        <p class="number-beds"> Number of Beds: ${room.numBeds}</p>
+        <p class="cost-per-night"> Cost per Night: ${room.costPerNight}</p>
+        <button class="book-button">Book Now!</button>
+        </div>
+        `;
+  });
+
+  function postBooking(){
+    
+  }
+}
