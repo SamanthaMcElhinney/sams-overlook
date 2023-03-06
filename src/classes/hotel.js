@@ -29,15 +29,9 @@ class Hotel {
         }
     }
 
-    addBooking(date, user, selectedRoom) {
-        this.bookings.push(new Booking({
-            "id": Date.now(),
-            "userID": user.id,
-            "date": date,
-            "roomNumber": selectedRoom.number
-        }, this.rooms))
+    addNewBooking(booking) {
+        this.bookings.push(new Booking(booking))
     }
-
 }
 
 export default Hotel
