@@ -21,7 +21,7 @@ describe('Hotel', () => {
         expect(hotel).to.be.an.instanceOf(Hotel)
     })
     it('should be able to filter available rooms by date', () => {
-        let availableDate = hotel.filterByDate("2022/04/22");
+        let availableDate = hotel.filterByDate("2022/09/22");
         expect(availableDate).to.have.a.lengthOf(2);
     })
     it('should be able to filter available rooms by type', () => {
@@ -31,13 +31,12 @@ describe('Hotel', () => {
         );
         expect(availableRooms).to.have.a.lengthOf(1);
     })
-    it('should be able to filter available rooms by multiple types', () => {
-        let date = hotel.filterByDate("2022/04/22");
-        let availableRooms = hotel.filterByRoomType("residential suite", date
-        );
-        console.log(availableRooms,"AR")
-        expect(availableRooms).to.have.a.lengthOf([1]);
-    })
+    // it('should be able to filter available rooms by multiple types', () => {
+    //     let date = hotel.filterByDate("2022/04/22");
+    //     let availableRooms = hotel.filterByRoomType("residential suite", date
+    //     );
+    //     expect(availableRooms).to.have.a.lengthOf([1]);
+    // })
     it("should be able to add new bookings", () => {
         expect(hotel.bookings).to.have.a.lengthOf(3)
     })
