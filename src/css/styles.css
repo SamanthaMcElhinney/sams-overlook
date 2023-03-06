@@ -9,6 +9,10 @@ body {
   overflow:auto;
 }
 
+main {
+  display:flex;
+}
+
 .container-top{
   /* color: #363439; */
   background-color: #606C38;
@@ -46,7 +50,11 @@ button{
   align-items: baseline;
 }
 
+.book-button{
+  color:black;
+}
 .container-bookings {
+  width: 40vw;
   margin: 50px;
   display: flex;
   flex-wrap: wrap;
@@ -65,10 +73,11 @@ button{
 }
 
 .container-total-cost {
-  color:#FEFAE0;
-  background: #606C38;
-  width:300px;
-  text-align: center;
+    color: #FEFAE0;
+    background: #606C38;
+    width: 300px;
+    text-align: center;
+    width: 40vw;
 }
 .dashboard {
   width: 200px;
@@ -85,4 +94,69 @@ button{
   justify-content: space-evenly;
   flex-direction: column;
   align-items: center;
+}
+
+.card-holder{
+  background-color: #FEFAE0;
+  padding: 15px;
+  /* width: 30vw; */
+  text-transform: capitalize;
+  text-align: center;
+  margin: 1em;
+}
+
+.box-image{
+  height:300px;
+  width:300px;
+}
+
+.container-available-rooms{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: stretch;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.styled-table {
+  color:black;
+   background-color: #dddddd;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color:  #606C38;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    color:black;
+}
+
+.styled-table tbody tr {
+  color: black;
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+    color:black;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid  #606C38;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #FEFAE0;
 }

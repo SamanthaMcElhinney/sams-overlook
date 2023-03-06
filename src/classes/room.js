@@ -3,7 +3,7 @@ class Room {
         this.number = roomData.number
         this.roomType = roomData.roomType;
         this.bidet = roomData.bidet
-        this.bedsize = roomData.bedsize;
+        this.bedSize = roomData.bedSize;
         this.numBeds = roomData.numBeds;
         this.costPerNight = roomData.costPerNight;
     }

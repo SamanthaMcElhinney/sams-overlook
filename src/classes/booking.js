@@ -7,11 +7,14 @@ class Booking {
     this.date = bookingData.date;
     this.roomNumber = bookingData.roomNumber;
   }
+
   findRoom(roomData){
-    const foundRoom = roomData.find(room => room.number === this.roomNumber)
-    return new Room(foundRoom)
-  }
+    return roomData.find(room => room.number === this.roomNumber)
+  }  
 
 }
+
+
+
 
 export default Booking;
