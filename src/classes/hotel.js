@@ -5,7 +5,6 @@ class Hotel {
     constructor(roomData, bookingData) {
         this.rooms = roomData.map(room => new Room(room))
         this.bookings = bookingData.map(booking => new Booking(booking))
-        this.openRooms = []
     }
 
     filterByDate(date) {
@@ -24,10 +23,8 @@ class Hotel {
         const availableFilteredRooms = availableRoomsByDate.filter(room =>
             room.roomType === roomType)
         if (!availableFilteredRooms.length) {
-            console.log(!availableFilteredRooms, "not available rooms")
             return 
         } else {
-            console.log(availableFilteredRooms, "AVAILABLE FILTERED ROOMS in function")
             return availableFilteredRooms;
         }
     }
