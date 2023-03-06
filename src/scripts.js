@@ -8,24 +8,22 @@ import Hotel from "./classes/hotel";
 // import "./images/bed.jpg";
 
 // -------------------------------DOM ELEMENTS-------------------------------
-const bookingsButton = document.querySelector("#bookings");
 const containerBookings = document.querySelector("#container-bookings");
 const containerTotalCost = document.querySelector(".container-total-cost");
 const searchRoomButton = document.querySelector("#searchRooms");
 const userCalendar = document.getElementById("date")
 const submitDateButton = document.querySelector("#submit-date-button");
 const containerRooms = document.querySelector("#container-available-rooms");
+const bookButton = document.getElementById("book-button");
 
-// const containerFilteredRooms = document.querySelector(
-//   ".container-filtered-rooms"
-// );
-// const searchRoomType = document.getElementById("roomType")
+
 let selection = document.querySelector('select')
 
 let testUser;
 let hotel;
 let cost;
 let valueSelected;
+
 
 //----------------------------------FETCH REQUESTS-----------------------------------
 
@@ -54,15 +52,12 @@ function fetchData() {
       const filteredBookings = testUser.filterBookingsById(data[1].bookings)
       cost = testUser.calculateTotalCost(filteredBookings, data[2].rooms);
       displayUserInfo()
-      // selectDate()
-      // searchRoom()
     })
 }
 window.onload = fetchData()
 
 // --------------------------------EVENT LISTENERS----------------------------------------
 
-// bookingsButton.addEventListener('click', displayUserInfo)
 submitDateButton.addEventListener("click", (event) => {
   selectDate(event);
 });
@@ -78,12 +73,6 @@ containerRooms.addEventListener("click", (event) => {
   bookARoom(event)
 })
 //----------------------------------------FUNCTIONS-----------------------------------------
-// function getSingleUser(userID){
-//   return fetch(`http://localhost:3001/api/v1/customers/${userID}`)
-//   .then(response => response.json())
-//   .then(data => newUser = data)
-//   .catch(error => console.log(error))
-// }
 
 function displayUserInfo() {
   containerBookings.innerHTML = " ";
@@ -137,8 +126,8 @@ function selectDate(event) {
         <div class="card-holder">
           <img class="box-image" src="./images/bed.jpg" alt="comfortable hotel bed">
           <h2 class="room-title">Room Type:${room.roomType}</h2>
-          <p class="bed-info">Bed Size: ${room.bedsize}</p>
-          <p class="bidet">Bidet: ${room.bidet}
+          <p class="bed-info">Bed Size: ${room.bedSize}</p>
+          <p class="bidet">Bidet:  ${determineBidet(room)}
           <p class="number-beds"> Number of Beds: ${room.numBeds}</p>
           <p class="cost-per-night"> Cost per Night: ${room.costPerNight}</p>
           <button class="book-button" id="${room.number}">Book Now!</button>
@@ -146,7 +135,6 @@ function selectDate(event) {
     `;
   });
 }
-//THIS will track event.target.id
 function determineSelection() {
   valueSelected = selection.options[selection.selectedIndex].text;
   if (valueSelected === "single room") {
@@ -181,11 +169,11 @@ function searchRoom(event) {
         `;
   });
 }
-//I need a way to track each button- room.
-//If it contains the book a button class- i'm getting true. Then I want to post the data.
+
 function bookARoom(event) {
   console.log(event.target.id, "ID for button")
   if (event.target.classList.contains("book-button")) {
+
     fetch("http://localhost:3001/api/v1/bookings", {
         method: "POST",
         body: JSON.stringify({
@@ -198,12 +186,25 @@ function bookARoom(event) {
         }
       })
       .then((result) => result.json())
-      .then((data) => console.log(data, "data in post"))
+      .then(data => {
+        if (data.message.includes("success")) {
+          console.log(data, "data in post")
+          hotel.addNewBooking(data)
+          // bookButton.innerText = "Booked💜"
+          hide(event.target.parentNode)
+        }
+      })
       .catch((error) =>
         alert(
-          `Server Error: ${error}. We are working on it. Please try again later`
+          `Server Error: ${error}. Our dearest appologies. We have gathered our finest engineers to work on the issue. Please try again booking later. Don't give up on a good time!`
         )
-      );
-
+      )
   }
 }
+  function hide(element) {
+    element.classList.add('hidden')
+  }
+
+  // function show(element){
+  //   element.classList.remove('hidden')
+  // }
