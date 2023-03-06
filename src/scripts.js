@@ -15,6 +15,9 @@ const searchRoomButton = document.querySelector("#searchRooms");
 const userCalendar = document.getElementById("date")
 const submitDateButton = document.querySelector("#submit-date-button");
 const containerRooms = document.querySelector("#container-available-rooms");
+// const containerFilteredRooms = document.querySelector(
+//   ".container-filtered-rooms"
+// );
 // const searchRoomType = document.getElementById("roomType")
 let selection = document.querySelector('select')
 
@@ -46,8 +49,8 @@ function fetchData() {
       const filteredBookings = testUser.filterBookingsById(data[1].bookings)
       cost = testUser.calculateTotalCost(filteredBookings, data[2].rooms);
       displayUserInfo()
-      selectDate(event)
-      searchRoom()
+      // selectDate()
+      // searchRoom()
     })
 }
 window.onload = fetchData()
@@ -59,21 +62,10 @@ submitDateButton.addEventListener("click", (event) => {
   selectDate(event);
 });
 
-selection.addEventListener('change', () => {
-  valueSelected = selection.options[selection.selectedIndex].text;
-  console.log(valueSelected)
-  if (valueSelected === "single room") {
-    return "single room"
-  } else if (valueSelected === "junior suite") {
-    return "junior suite"
-  } else if (valueSelected === "suite") {
-    return "suite"
-  } else if (valueSelected === "residential") {
-    return "residential suite"
-  }
-})
+selection.addEventListener('change', determineSelection)
 
 searchRoomButton.addEventListener("click", (event) => {
+  determineSelection();
   searchRoom(event);
 });
 
@@ -106,30 +98,30 @@ function displayUserInfo() {
   containerBookings.innerHTML = " ";
   testUser.bookings.forEach((booking) => {
     containerBookings.innerHTML += `
-        <table class="styled-table">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Room Number</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr class="active-row">
-            <td> ${booking.date}</td>
-            <td>${booking.roomNumber}</td>
-        </tr>
-        <!-- and so on... -->
-    </tbody>
-</table>
-
-     `;
+              <table class="styled-table">
+              <thead>
+              <tr>
+              <th>Date</th>
+              <th>Room Number</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr class="active-row">
+              <td> ${booking.date}</td>
+              <td>${booking.roomNumber}</td>
+              </tr>
+              <!-- and so on... -->
+              </tbody>
+              </table>
+              
+              `;
   })
   containerTotalCost.innerHTML = " ";
   containerTotalCost.innerHTML += `
-  ${testUser.name}
-    <h3>Thanks for being a loyal customer!</h3>
-    <p>Total Spent: $${cost} </p>
-    `;
+            ${testUser.name}
+            <h3>Thanks for being a loyal customer!</h3>
+            <p>Total Spent: $${cost} </p>
+            `;
 }
 
 function determineBidet(room) {
@@ -140,43 +132,52 @@ function determineBidet(room) {
 }
 
 let dateSelected;
-let availableRooms;
 
 function selectDate(event) {
-  event.preventDefault()
-  if(userCalendar.value) {
-    dateSelected = userCalendar.value.split("-").join("/");
-    console.log(dateSelected, "Dateselected")
-    availableRooms = hotel.filterByDate(dateSelected)
-    console.log(dateSelected)
-    containerRooms.innerHTML = " ";
-    availableRooms.forEach((room) => {
-      containerRooms.innerHTML += `
-      <div class="card-holder">
-      <img class="box-image" src="./images/bed.jpg" alt="comfortable hotel bed">
-      <h2 class="room-title">Room Type:${room.roomType}</h2>
-      <p class="bed-info">Bed Size: ${room.bedSize}</p>
-      <p class="bidet">Bidet: ${determineBidet(room)}
-      <p class="number-beds"> Number of Beds: ${room.numBeds}</p>
-      <p class="cost-per-night"> Cost per Night: ${room.costPerNight}</p>
-      <button class="book-button">Book Now!</button>
-      </div>
-      `;
-    })
-  } else {
-    containerRooms.innerHTML += `<p class="apology"> Our sincerest appologies my friend! There are no available dates. Please try another time`
+  event.preventDefault();
+  console.log(event);
+  let dateSelected = userCalendar.value.split("-").join("/");
+  console.log(dateSelected);
+  const availableRooms = hotel.filterByDate(dateSelected);
+  console.log(availableRooms);
+  containerRooms.innerHTML = " ";
+  availableRooms.forEach((room) => {
+    containerRooms.innerHTML += `
+        <div class="card-holder">
+          <img class="box-image" src="./images/bed.jpg" alt="comfortable hotel bed">
+          <h2 class="room-title">Room Type:${room.roomType}</h2>
+          <p class="bed-info">Bed Size: ${room.bedsize}</p>
+          <p class="bidet">Bidet: ${room.bidet}
+          <p class="number-beds"> Number of Beds: ${room.numBeds}</p>
+          <p class="cost-per-night"> Cost per Night: ${room.costPerNight}</p>
+          <button class="book-button">Book Now!</button>
+        </div>
+    `;
+  });
+}
+
+
+function determineSelection() {
+  valueSelected = selection.options[selection.selectedIndex].text;
+  if (valueSelected === "single room") {
+    return "single room"
+  } else if (valueSelected === "junior suite") {
+    return "junior suite"
+  } else if (valueSelected === "suite") {
+    return "suite"
+  } else if (valueSelected === "residential") {
+    return "residential suite"
   }
+  return false
 }
 
 function searchRoom(event) {
   event.preventDefault()
-  let filteredDate = selectDate(event)
-  hotel.filterByRoomType(valueSelected, filteredDate)
-  console.log(dateSelected, "date in function")
-  console.log(valueSelected, "INFUNCTION VALUE")
+  dateSelected = userCalendar.value.split("-").join("/");
+  let filterValue = determineSelection()
+  hotel.filterByRoomType(filterValue, dateSelected)
   containerRooms.innerHTML = " ";
-  availableRooms.forEach((room) => {
-    console.log(availableRooms, "AR in function")
+  hotel.filterByRoomType(filterValue,dateSelected).forEach((room) => {
     containerRooms.innerHTML += `
         <div class="card-holder">
         <img class="box-image" src="./images/bed.jpg" alt="comfortable hotel bed">
@@ -190,7 +191,7 @@ function searchRoom(event) {
         `;
   });
 
-  function postBooking(){
-    
-  }
+  // function postBooking(){
+
+  // }
 }
