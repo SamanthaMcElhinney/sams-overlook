@@ -15,6 +15,7 @@ const searchRoomButton = document.querySelector("#searchRooms");
 const userCalendar = document.getElementById("date")
 const submitDateButton = document.querySelector("#submit-date-button");
 const containerRooms = document.querySelector("#container-available-rooms");
+
 // const containerFilteredRooms = document.querySelector(
 //   ".container-filtered-rooms"
 // );
@@ -40,11 +41,15 @@ const getRooms = fetch("http://localhost:3001/api/v1/rooms").then((response) =>
   response.json()
 );
 
+let postBookings
+
 function fetchData() {
   Promise.all([getCustomers, getBookings, getRooms])
     .then(data => {
       testUser = new User(data[0].customers[8])
       hotel = new Hotel(data[2].rooms, data[1].bookings)
+      postBookings = data[1].bookings.map(booking => new Booking(booking))
+      console.log(postBookings, "postBookings")
       console.log(hotel, 'hotel')
       const filteredBookings = testUser.filterBookingsById(data[1].bookings)
       cost = testUser.calculateTotalCost(filteredBookings, data[2].rooms);
@@ -69,6 +74,9 @@ searchRoomButton.addEventListener("click", (event) => {
   searchRoom(event);
 });
 
+containerRooms.addEventListener("click", (event) => {
+  bookARoom(event)
+})
 //----------------------------------------FUNCTIONS-----------------------------------------
 // function getSingleUser(userID){
 //   return fetch(`http://localhost:3001/api/v1/customers/${userID}`)
@@ -77,23 +85,6 @@ searchRoomButton.addEventListener("click", (event) => {
 //   .catch(error => console.log(error))
 // }
 
-// function postNewBookings(booking){
-//   fetch("http://localhost:3001/api/v1/bookings"),
-//     {
-//       method: "Post",
-//       body: JSON.stringify({
-//         userID: booking.userID,
-//         date: booking.date,
-//         roomNumber: booking.roomNumer,
-//       }),
-//       headers: {
-//         "Content-Type": "application/json",
-//       }
-//     }
-//       .then(result => result.json())
-//       .then(data => console.log(data))
-//       .catch(error => alert(`Server Error: ${error}. We are working on it. Please try again later`))
-// }
 function displayUserInfo() {
   containerBookings.innerHTML = " ";
   testUser.bookings.forEach((booking) => {
@@ -136,7 +127,7 @@ let dateSelected;
 function selectDate(event) {
   event.preventDefault();
   console.log(event);
-  let dateSelected = userCalendar.value.split("-").join("/");
+  dateSelected = userCalendar.value.split("-").join("/");
   console.log(dateSelected);
   const availableRooms = hotel.filterByDate(dateSelected);
   console.log(availableRooms);
@@ -150,13 +141,12 @@ function selectDate(event) {
           <p class="bidet">Bidet: ${room.bidet}
           <p class="number-beds"> Number of Beds: ${room.numBeds}</p>
           <p class="cost-per-night"> Cost per Night: ${room.costPerNight}</p>
-          <button class="book-button">Book Now!</button>
+          <button class="book-button" id="${room.number}">Book Now!</button>
         </div>
     `;
   });
 }
-
-
+//THIS will track event.target.id
 function determineSelection() {
   valueSelected = selection.options[selection.selectedIndex].text;
   if (valueSelected === "single room") {
@@ -177,7 +167,7 @@ function searchRoom(event) {
   let filterValue = determineSelection()
   hotel.filterByRoomType(filterValue, dateSelected)
   containerRooms.innerHTML = " ";
-  hotel.filterByRoomType(filterValue,dateSelected).forEach((room) => {
+  hotel.filterByRoomType(filterValue, dateSelected).forEach((room) => {
     containerRooms.innerHTML += `
         <div class="card-holder">
         <img class="box-image" src="./images/bed.jpg" alt="comfortable hotel bed">
@@ -190,8 +180,30 @@ function searchRoom(event) {
         </div>
         `;
   });
+}
+//I need a way to track each button- room.
+//If it contains the book a button class- i'm getting true. Then I want to post the data.
+function bookARoom(event) {
+  console.log(event.target.id, "ID for button")
+  if (event.target.classList.contains("book-button")) {
+    fetch("http://localhost:3001/api/v1/bookings", {
+        method: "POST",
+        body: JSON.stringify({
+          userID: testUser.id,
+          date: dateSelected,
+          roomNumber: parseInt(event.target.id)
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
+      .then((result) => result.json())
+      .then((data) => console.log(data, "data in post"))
+      .catch((error) =>
+        alert(
+          `Server Error: ${error}. We are working on it. Please try again later`
+        )
+      );
 
-  // function postBooking(){
-
-  // }
+  }
 }
