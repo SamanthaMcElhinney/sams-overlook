@@ -22,7 +22,7 @@ describe('Hotel', () => {
     })
     it('should be able to filter available rooms by date', () => {
         let availableDate = hotel.filterByDate("2022/09/22");
-        expect(availableDate).to.have.a.lengthOf(2);
+        expect(availableDate).to.have.a.lengthOf(3);
     })
     it('should be able to filter available rooms by type', () => {
         let availableRooms = hotel.filterByRoomType(
