@@ -24,6 +24,7 @@
           <option value="residential">residential suite</option>
         </select>
         <button id="searchRooms" type="button" value="submit">Search Rooms</button>
+        <button id="user-login" type="button" value="submit">Login</button>
       </form>
     </div>
     <main>
@@ -38,6 +39,38 @@
         <div class="container-filtered-rooms"></div>
         <div class="container-available-rooms" id="container-available-rooms"></div>
       </section>
+      <div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1">
+          <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <header class="modal__header">
+              <h2 class="modal__title" id="modal-1-title">
+                Login
+              </h2>
+              <h3 class="user-error-message" id="modal-error-message"></h3>
+            </header>
+            <main class="modal__content" id="modal-1-content">
+              <form class="login-form">
+                <div>
+                  <label id="username"for="username">Username</label>
+                  <input class="username" type="text" required />
+                </div>
+                <div>
+                  <label id="password"for="password">Password</label>
+                  <input class="password" type="password" required>
+                </div>
+                <input class="login-button" type="submit" value="Login">
+              </form>
+              <h3 class="error-msg"></h3>
+              </section>
+              <button class="modal_button"></button>
+            </main>
+            <footer class="modal__footer">
+              <button class="modal__btn modal__btn-primary">Continue</button>
+              <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
+            </footer>
+          </div>
+        </div>
+      </div>
     </main>
     <script src="bundle.js"></script>
   </body>
