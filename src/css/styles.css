@@ -273,10 +273,8 @@ button {
   color: #fff;
 }
 
-
-
 /**************************\
-  Demo Animation Style
+  Modal Animation Style
 \**************************/
 @keyframes mmfadeIn {
     from { opacity: 0; }
