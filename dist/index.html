@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Overlook</title>
   </head>
-
   <body>
     <header class="container-top" id="header-top-container">
       <h1 class="header-title">The Overlook Hotel</h1>
@@ -57,15 +56,15 @@
                 <div>
                   <label id="password"for="password">Password</label>
                   <input class="password" type="password" required>
+                  <button class="validate"></button>
                 </div>
-                <input class="login-button" type="submit" value="Login">
               </form>
               <h3 class="error-msg"></h3>
               </section>
               <button class="modal_button"></button>
             </main>
             <footer class="modal__footer">
-              <button class="modal__btn modal__btn-primary">Continue</button>
+              <button class="modal__btn modal__btn-primary" id="modal-continue">Continue</button>
               <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Close</button>
             </footer>
           </div>
