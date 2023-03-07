@@ -46,8 +46,4 @@ describe("Booking", () => {
         let room = booking.findRoom(sampleRoomData)
         expect(room.number).to.equal(12)
     })
-    // it('should be able to create a new instance of room when finding a room', () => {
-    //     let room = booking.findRoom(roomData);
-    //     expect(room).to.be.instanceOf(Room)
-    // })
 })
