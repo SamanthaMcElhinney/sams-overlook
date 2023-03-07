@@ -16,7 +16,6 @@ const submitDateButton = document.querySelector("#submit-date-button");
 const containerRooms = document.querySelector("#container-available-rooms");
 const bookButton = document.getElementById("book-button");
 
-
 let selection = document.querySelector('select')
 
 let testUser;
@@ -80,7 +79,7 @@ function displayUserInfo() {
     containerBookings.innerHTML += `
               <table class="styled-table">
               <thead>
-              <tr>
+              <tr id="table-header">
               <th>Date</th>
               <th>Room Number</th>
               </tr>
