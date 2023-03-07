@@ -32,8 +32,3 @@ class User {
 
 export default User
 
-//I should see a dashboard page that shows me:
-//Any room bookings I have made (past or upcoming)
-
-//method to calculate total cost
-//method to calculate bookings
