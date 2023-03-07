@@ -5,7 +5,7 @@ import Room from "./classes/Room";
 import User from "./classes/user.js";
 import Booking from "./classes/booking";
 import Hotel from "./classes/hotel";
-// import "./images/bed.jpg";
+import "./images/bed.jpg";
 
 // -------------------------------DOM ELEMENTS-------------------------------
 const containerBookings = document.querySelector("#container-bookings");
@@ -14,8 +14,6 @@ const searchRoomButton = document.querySelector("#searchRooms");
 const userCalendar = document.getElementById("date")
 const submitDateButton = document.querySelector("#submit-date-button");
 const containerRooms = document.querySelector("#container-available-rooms");
-const bookButton = document.getElementById("book-button");
-
 
 let selection = document.querySelector('select')
 
@@ -23,6 +21,7 @@ let testUser;
 let hotel;
 let cost;
 let valueSelected;
+let dateSelected;
 
 
 //----------------------------------FETCH REQUESTS-----------------------------------
@@ -78,22 +77,9 @@ function displayUserInfo() {
   containerBookings.innerHTML = " ";
   testUser.bookings.forEach((booking) => {
     containerBookings.innerHTML += `
-              <table class="styled-table">
-              <thead>
-              <tr>
-              <th>Date</th>
-              <th>Room Number</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr class="active-row">
-              <td> ${booking.date}</td>
-              <td>${booking.roomNumber}</td>
-              </tr>
-              <!-- and so on... -->
-              </tbody>
-              </table>
-              
+     <div class="user-bookings dashboard">
+        <p class="p-date"> Date: ${booking.date}</p>
+        <p class="p-user"> Room number: ${booking.roomNumber}</p>
               `;
   })
   containerTotalCost.innerHTML = " ";
@@ -111,7 +97,6 @@ function determineBidet(room) {
   return `No`;
 }
 
-let dateSelected;
 
 function selectDate(event) {
   event.preventDefault();
@@ -135,6 +120,7 @@ function selectDate(event) {
     `;
   });
 }
+
 function determineSelection() {
   valueSelected = selection.options[selection.selectedIndex].text;
   if (valueSelected === "single room") {
@@ -201,10 +187,11 @@ function bookARoom(event) {
       )
   }
 }
-  function hide(element) {
-    element.classList.add('hidden')
-  }
 
-  // function show(element){
-  //   element.classList.remove('hidden')
-  // }
+function hide(element) {
+  element.classList.add('hidden')
+}
+
+function show(element){
+  element.classList.remove('hidden')
+}

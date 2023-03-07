@@ -13,45 +13,32 @@
       <h1 class="header-title">The Overlook Hotel</h1>
     </header>
     <div class="date-selector" id="date-selector" role="main">
-      <form>
+      <form role="search">
         <label for="date">Please select a date</label>
         <input type="date" id="date" name="date" />
-        <button type="submit" class="submit-date-button" id="submit-date-button">submit date</button>
+        <button type="submit" class="submit-date-button" id="submit-date-button">Submit Date</button>
         <select id="roomType" name="room-type">
           <option value="single room">single room</option>
           <option value="junior suite">junior suite</option>
           <option value="suite">suite</option>
           <option value="residential">residential suite</option>
         </select>
-        <button id="searchRooms">Search Rooms</button>
+        <button id="searchRooms" type="button" value="submit">Search Rooms</button>
       </form>
     </div>
-    <nav class="container-top">
-      <div class="nav-buttons row">
-        <button class="nav-buttons" id="home">Home</button>
-        <button class="nav-buttons" id="bookings">My Bookings</button>
-        <button class="nav-buttons" id="expenses">My Expenses</button>
-      </div>
-    </nav>
     <main>
       <section class="user-container-info">
-        <h2 class="container-total-cost">Total Cost Container</h2>
+        <div class="container-total">
+          <h2 class="container-total-cost">Total Cost Container</h2>
+          <h2 class="container-bookings-header">Previous Bookings:</h2>
+        </div>
         <div class="container-bookings" id="container-bookings"></div>
       </section>
       <section class="user-container-display-rooms">
         <div class="container-filtered-rooms"></div>
-        <div class="container-available-rooms" id="container-available-rooms">Container</div>
-        <!-- <div class="card-holder">
-          <img class="box-image" src="./images/bed.jpg" alt="comfortable hotel bed">
-          <h2 class="room-title">${room.roomType}</h2>
-          <p class="bed-info">${room.bedsize}</p>
-          <p class="number-beds">${room.numBeds}</p>
-          <p class="cost-per-night">${room.costPerNight}</p>
-          <button class="book-button">Book Now!</button>
-        </div> -->
+        <div class="container-available-rooms" id="container-available-rooms"></div>
       </section>
     </main>
-    <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
     <script src="bundle.js"></script>
   </body>
 
