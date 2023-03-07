@@ -31,12 +31,12 @@ describe('Hotel', () => {
         );
         expect(availableRooms).to.have.a.lengthOf(1);
     })
-    // it('should be able to filter available rooms by multiple types', () => {
-    //     let date = hotel.filterByDate("2022/04/22");
-    //     let availableRooms = hotel.filterByRoomType("residential suite", date
-    //     );
-    //     expect(availableRooms).to.have.a.lengthOf([1]);
-    // })
+    it('should be able to filter available rooms by multiple types', () => {
+        let date = hotel.filterByDate("2022/04/22");
+        let availableRooms = hotel.filterByRoomType("residential suite", date
+        );
+        expect(availableRooms).to.have.a.lengthOf([1]);
+    })
     it("should be able to add new bookings", () => {
         expect(hotel.bookings).to.have.a.lengthOf(3)
     })

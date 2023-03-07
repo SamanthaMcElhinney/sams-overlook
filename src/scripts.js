@@ -6,6 +6,8 @@ import User from "./classes/user.js";
 import Booking from "./classes/booking";
 import Hotel from "./classes/hotel";
 import "./images/bed.jpg";
+import MicroModal from "micromodal";
+MicroModal.init()
 
 // -------------------------------DOM ELEMENTS-------------------------------
 const containerBookings = document.querySelector("#container-bookings");
@@ -14,9 +16,14 @@ const searchRoomButton = document.querySelector("#searchRooms");
 const userCalendar = document.getElementById("date")
 const submitDateButton = document.querySelector("#submit-date-button");
 const containerRooms = document.querySelector("#container-available-rooms");
+const userLogin = document.querySelector("#user-login");
+const mainPage = document.querySelector(".user-container-info");
+const errorMessageContainer = document.querySelector("#modal-error-message");
+const modalContinue = document.querySelector("#modal-continue")
 
 let selection = document.querySelector('select')
 
+let postBookings;
 let testUser;
 let hotel;
 let cost;
@@ -38,22 +45,28 @@ const getRooms = fetch("http://localhost:3001/api/v1/rooms").then((response) =>
   response.json()
 );
 
-let postBookings
-
 function fetchData() {
   Promise.all([getCustomers, getBookings, getRooms])
     .then(data => {
       testUser = new User(data[0].customers[8])
       hotel = new Hotel(data[2].rooms, data[1].bookings)
       postBookings = data[1].bookings.map(booking => new Booking(booking))
-      console.log(postBookings, "postBookings")
-      console.log(hotel, 'hotel')
       const filteredBookings = testUser.filterBookingsById(data[1].bookings)
       cost = testUser.calculateTotalCost(filteredBookings, data[2].rooms);
       displayUserInfo()
     })
 }
 window.onload = fetchData()
+
+function getSpecificUser(id){
+  const getUserID = fetch(`http://localhost:3001/api/v1/customers/"${id}`)
+  .then((response) => response.json()
+  .then(data => {
+    console.log(data)
+  })
+  .catch(error => console.log(error))
+);
+}
 
 // --------------------------------EVENT LISTENERS----------------------------------------
 
@@ -71,6 +84,12 @@ searchRoomButton.addEventListener("click", (event) => {
 containerRooms.addEventListener("click", (event) => {
   bookARoom(event)
 })
+
+userLogin.addEventListener("click",(event)=> {
+  showLoginPage(event)
+})
+
+
 //----------------------------------------FUNCTIONS-----------------------------------------
 
 function displayUserInfo() {
@@ -176,7 +195,6 @@ function bookARoom(event) {
         if (data.message.includes("success")) {
           console.log(data, "data in post")
           hotel.addNewBooking(data)
-          // bookButton.innerText = "Booked💜"
           hide(event.target.parentNode)
         }
       })
@@ -195,3 +213,31 @@ function hide(element) {
 function show(element){
   element.classList.remove('hidden')
 }
+
+function authenticateUser(username, password) {
+  if(!password === overlook2021){
+    errorMessageContainer.innerText = "Sorry invalid password"
+  } else if(!username.value.includes('customer')){
+    errorMessageContainer.innterText = "Sorry invalid password"
+  } else {
+  }
+}
+
+function showLoginPage(){
+  MicroModal.show("modal-1");
+  errorMessageContainer.innerText ="Welcome user"
+  const loginForm = document.querySelector("#login-form");
+  loginForm.addEventListener('click', (event) => {
+    event.preventDefault()
+    const usernameInput = document.querySelector("#username");
+    const passwordInput = document.querySelector("#password");
+    let username = usernameInput.value;
+    let password = passwordInput.value;
+    let userID = parseInt(username.split('customer')[1])
+    if(password === overlook2021 && username.includes('customer')){
+      getSpecificUser(userID)
+    }
+  })
+}
+
+  
