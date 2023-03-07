@@ -5,7 +5,7 @@ import Room from "./classes/Room";
 import User from "./classes/user.js";
 import Booking from "./classes/booking";
 import Hotel from "./classes/hotel";
-// import "./images/bed.jpg";
+import "./images/bed.jpg";
 
 // -------------------------------DOM ELEMENTS-------------------------------
 const containerBookings = document.querySelector("#container-bookings");
@@ -89,11 +89,7 @@ function displayUserInfo() {
               <tr class="active-row">
               <td> ${booking.date}</td>
               <td>${booking.roomNumber}</td>
-              </tr>
-              <!-- and so on... -->
-              </tbody>
-              </table>
-              
+              </table>      
               `;
   })
   containerTotalCost.innerHTML = " ";
