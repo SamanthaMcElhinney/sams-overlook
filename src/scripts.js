@@ -6,6 +6,8 @@ import User from "./classes/user.js";
 import Booking from "./classes/booking";
 import Hotel from "./classes/hotel";
 import "./images/bed.jpg";
+import MicroModal from "micromodal";
+MicroModal.init()
 
 // -------------------------------DOM ELEMENTS-------------------------------
 const containerBookings = document.querySelector("#container-bookings");
@@ -14,6 +16,11 @@ const searchRoomButton = document.querySelector("#searchRooms");
 const userCalendar = document.getElementById("date")
 const submitDateButton = document.querySelector("#submit-date-button");
 const containerRooms = document.querySelector("#container-available-rooms");
+const userLogin = document.querySelector("#user-login");
+const mainPage = document.querySelector(".user-container-info");
+const usernameInput = document.querySelector("#username")
+const passwordInput = document.querySelector("#password")
+const errorMessageContainer = document.querySelector("#modal-error-message");
 
 let selection = document.querySelector('select')
 
@@ -22,6 +29,7 @@ let hotel;
 let cost;
 let valueSelected;
 let dateSelected;
+let currentView = 'landing'
 
 
 //----------------------------------FETCH REQUESTS-----------------------------------
@@ -46,14 +54,22 @@ function fetchData() {
       testUser = new User(data[0].customers[8])
       hotel = new Hotel(data[2].rooms, data[1].bookings)
       postBookings = data[1].bookings.map(booking => new Booking(booking))
-      console.log(postBookings, "postBookings")
-      console.log(hotel, 'hotel')
       const filteredBookings = testUser.filterBookingsById(data[1].bookings)
       cost = testUser.calculateTotalCost(filteredBookings, data[2].rooms);
       displayUserInfo()
     })
 }
 window.onload = fetchData()
+
+function getSpecificUser(id){
+  const getCustomers = fetch(`http://localhost:3001/api/v1/customers/"${id}`)
+  .then((response) => response.json()
+  .then(data => {
+    console.log(data)
+  })
+  .catch(error => console.log(error))
+);
+}
 
 // --------------------------------EVENT LISTENERS----------------------------------------
 
@@ -70,6 +86,10 @@ searchRoomButton.addEventListener("click", (event) => {
 
 containerRooms.addEventListener("click", (event) => {
   bookARoom(event)
+})
+
+userLogin.addEventListener("click",(event)=> {
+  showLoginPage(event)
 })
 //----------------------------------------FUNCTIONS-----------------------------------------
 
@@ -195,3 +215,35 @@ function hide(element) {
 function show(element){
   element.classList.remove('hidden')
 }
+
+function validateUser(){
+  if(!passwordInput === overlook2021){
+    errorMessageContainer.innerText = "Sorry invalid password"
+  } else if(!usernameInput.value.includes('customer')){
+    errorMessageContainer.innterText = "Sorry invalid password"
+  } else {
+    findUser()
+  }
+}
+
+function findUser(){
+  let foundUserName = parseInt(username.split('customer')[1])
+}
+
+function showLoginPage(event){
+  event.preventDefault()
+  MicroModal.show("modal-1");
+  errorMessageContainer.innerText ="Welcome user"
+  // let username = usernameInput.value;
+  // console.log(username)
+  // let password = passwordInput.value;
+  // if (!passwordInput === overlook2021) {
+  //   errorMessageContainer.innerText = "Sorry invalid password";
+  // } else if (!usernameInput.value.includes("customer")) {
+  //   errorMessageContainer.innterText = "Sorry invalid password";
+  // } else {
+  //   findUser();
+  // }
+}
+
+  
