@@ -7,27 +7,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Overlook</title>
   </head>
+
   <body>
     <header class="container-top" id="header-top-container">
       <h1 class="header-title">The Overlook Hotel</h1>
     </header>
     <div class="date-selector" id="date-selector" role="main">
-      <form>
+      <form role="search">
         <label for="date">Please select a date</label>
-        <input type="date" id="date" name="date"/>
-        <button type="submit" class="submit-date-button"  aria-label="search date" id="submit-date-button">Submit Date</button>
-        <select id="roomType" name="room-type" aria-label="search room types"> 
+        <input type="date" id="date" name="date" />
+        <button type="submit" class="submit-date-button" id="submit-date-button">Submit Date</button>
+        <select id="roomType" name="room-type">
           <option value="single room">single room</option>
           <option value="junior suite">junior suite</option>
           <option value="suite">suite</option>
           <option value="residential">residential suite</option>
         </select>
-        <button id="searchRooms">Search Rooms</button>
+        <button id="searchRooms" type="button" value="submit">Search Rooms</button>
       </form>
     </div>
     <main>
       <section class="user-container-info">
-        <h2 class="container-total-cost">Total Cost Container</h2>
+        <div class="container-total">
+          <h2 class="container-total-cost">Total Cost Container</h2>
+          <h2 class="container-bookings-header">Previous Bookings:</h2>
+        </div>
         <div class="container-bookings" id="container-bookings"></div>
       </section>
       <section class="user-container-display-rooms">
@@ -35,7 +39,6 @@
         <div class="container-available-rooms" id="container-available-rooms"></div>
       </section>
     </main>
-    <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
     <script src="bundle.js"></script>
   </body>
 
