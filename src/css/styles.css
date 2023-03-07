@@ -15,7 +15,7 @@ main {
 
 .container-top{
   /* color: #363439; */
-  background-color: #636EC4;
+  background-color: #0077B6;
   color: #FEFAE0;
   display: flex;
   flex-direction: column;
@@ -25,6 +25,7 @@ main {
   display: flex;
   flex-direction: row-reverse;
   margin-bottom: 10px;
+  color:black;
 }
 
 #home{
@@ -32,16 +33,18 @@ main {
 }
 
 button{
-  background: none;
+  /* background: none; */
   cursor: pointer;
   color: #FEFAE0;
+  background-color:black;
+  
 }
 
 .date-selector{
   color:#FEFAE0;
   padding:20px;
   overflow:auto;
-  background-color:#636EC4;
+  background-color: #0077B6;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -74,7 +77,7 @@ button{
 
 .container-total-cost {
     color: #FEFAE0;
-    background: #636EC4;
+    background: #0077B6;
     width: 300px;
     text-align: center;
     width: 40vw;
@@ -120,8 +123,8 @@ button{
 }
 
 .styled-table {
-  color:black;
-   background-color: #dddddd;
+    /* color:black; */
+    background-color: #dddddd;
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9em;
@@ -131,57 +134,24 @@ button{
 }
 
 .styled-table thead tr {
-    background-color: #636EC4;
-    color: #ffffff;
+    background-color: #90E0EF;
+    color: white;
     text-align: left;
 }
 
 .styled-table th,
 .styled-table td {
     padding: 12px 15px;
-    color:black;
-}
-
-.styled-table tbody tr {
-  color: black;
-    border-bottom: 1px solid #dddddd;
-}
-
-.styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
-    color:black;
-}
-
-.styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #636EC4;
+    color: black;
 }
 
 .styled-table tbody tr.active-row {
     font-weight: bold;
-    color: #FEFAE0;
-}
-
-scroll-element {
-  width: inherit;
-  height: inherit;
-  position: absolute;
-  left: 0%;
-  top: 0%;
-  animation: primary 3s linear infinite;
-}
-
-@keyframes primary {
-  from {
-    top: 0%;
-  }
-  
-  to {
-    bottom: -100%;
-  }
+    color: #90E0EF;
 }
 
 #top-button {
-  background-color: #636EC4;
+  background-color: #90E0EF;
   color: #FEFAE0;
   display: none;
   font-size: 18px;
@@ -194,4 +164,8 @@ scroll-element {
   padding: 15px;
   border-radius: 10px;
   height: fit-content;
+}
+
+#table-header{
+  color:#dddddd !important;
 }
